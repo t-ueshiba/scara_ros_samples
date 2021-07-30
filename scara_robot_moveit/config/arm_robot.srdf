@@ -22,8 +22,17 @@
         <joint name="arm3_joint" value="0" />
         <joint name="arm4_joint" value="0" />
     </group_state>
+    <group_state name="ready" group="arm">
+        <joint name="arm1_joint" value="0.9" />
+        <joint name="arm2_joint" value="-1.8" />
+        <joint name="arm3_joint" value="0" />
+        <joint name="arm4_joint" value="0.9" />
+    </group_state>
     <group_state name="release" group="gripper">
         <joint name="arm5r_joint" value="0" />
+    </group_state>
+    <group_state name="grasp" group="gripper">
+        <joint name="arm5r_joint" value="0.0047" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper" parent_link="arm4_link" group="gripper" />

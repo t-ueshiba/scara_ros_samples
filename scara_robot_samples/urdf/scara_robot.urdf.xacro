@@ -9,7 +9,7 @@
 
   <joint name="base_link_joint" type="fixed">
     <parent link="world"/>
-    <child link="base_link"/> 
+    <child link="base_link"/>
   </joint>
   <!--xacro:boxlink link_name="base_base" mass="0.191" x="0" y="0" z="0.005" depth="0.23" width="0.21" height="0.01"/-->
 
@@ -40,7 +40,7 @@
 
   <joint name="base_pillar_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="base_pillar"/> 
+    <child link="base_pillar"/>
   </joint>
   <!--xacro:boxlink link_name="base_link" mass="0.139" x="0" y="0" z="0.00349" depth="0.0789772" width="0.0699" height="0.178"/-->
   <!--xacro:armlink link_name="base_link" model_fname="scara_pillar" mass="0.139" x="0" y="0" z="0.00349" depth="0.0789772" width="0.0699" height="0.1814568"/-->
@@ -72,7 +72,7 @@
 
   <joint name="arm1_joint" type="revolute">
     <xacro:armjoint
-      parent_link="base_pillar" link_name="arm1_link" lower="-2.443" upper="2.443" velocity="1" 
+      parent_link="base_pillar" link_name="arm1_link" lower="-2.443" upper="2.443" velocity="1"
       origin_x="0.0" origin_y="0" origin_z="0.16148" axis_x="0" axis_y="0" axis_z="1">
     </xacro:armjoint>
   </joint>
@@ -109,7 +109,7 @@
 
   <joint name="arm2_joint" type="revolute">
     <xacro:armjoint
-      parent_link="arm1_link" link_name="arm2_link" lower="-2.443" upper="2.443" velocity="1" 
+      parent_link="arm1_link" link_name="arm2_link" lower="-2.443" upper="2.443" velocity="1"
       origin_x="0.08" origin_y="0" origin_z="0.0" axis_x="0" axis_y="0" axis_z="1">
     </xacro:armjoint>
   </joint>
@@ -142,7 +142,7 @@
 
   <joint name="arm3_joint" type="prismatic">
     <xacro:armjoint
-      parent_link="arm2_link" link_name="arm3_link" lower="-0.035" upper="0.035" velocity="1"  
+      parent_link="arm2_link" link_name="arm3_link" lower="-0.035" upper="0.035" velocity="1"
       origin_x="0.06489" origin_y="0" origin_z="0" axis_x="0" axis_y="0" axis_z="1">
     </xacro:armjoint>
   </joint>
@@ -177,7 +177,7 @@
 
   <joint name="arm4_joint" type="revolute">
     <xacro:armjoint
-      parent_link="arm3_link" link_name="arm4_link" lower="-2.617" upper="2.617" velocity="1" 
+      parent_link="arm3_link" link_name="arm4_link" lower="-2.617" upper="2.617" velocity="1"
       origin_x="0.015032" origin_y="0" origin_z="-0.048953" axis_x="0" axis_y="0" axis_z="1">
     </xacro:armjoint>
   </joint>
@@ -215,7 +215,7 @@
   <joint name="arm5r_joint" type="prismatic">
 
     <xacro:armjoint
-      parent_link="arm4_link" link_name="arm5r_link" lower="-0.005" upper="0.005" velocity="1"  
+      parent_link="arm4_link" link_name="arm5r_link" lower="-0.005" upper="0.005" velocity="1"
       origin_x="0.0" origin_y="0.0" origin_z="-0.038115" axis_x="0" axis_y="1" axis_z="0">
     </xacro:armjoint>
   </joint>
@@ -250,7 +250,7 @@
 
   <joint name="arm5l_joint" type="prismatic">
     <xacro:armjoint
-      parent_link="arm4_link" link_name="arm5l_link" lower="-0.005" upper="0.005" velocity="1"  
+      parent_link="arm4_link" link_name="arm5l_link" lower="-0.005" upper="0.005" velocity="1"
       origin_x="0.0" origin_y="0.0" origin_z="-0.038115" axis_x="0" axis_y="1" axis_z="0">
     </xacro:armjoint>
     <mimic joint="arm5r_joint" multiplier="-1" offset="0"
@@ -279,6 +279,13 @@
       </inertial>
     </link>
 
+    <link name="tip_link"/>
+    <joint name="tip_link_joint" type="fixed">
+      <parent link="arm4_link"/>
+      <child link="tip_link"/>
+      <origin rpy="0.0 ${pi/2} 0.0" xyz="0.0 0.0 -0.067"/>
+    </joint>
+
   <!--xacro:boxlink link_name="arm5l_link" mass="0.004" x="0" y="0" z="0" depth="0.023" width="0.001" height="0.023"/-->
   <gazebo reference="arm5l_link">
     <material>Gazebo/White</material>
@@ -293,4 +300,3 @@
   </gazebo>
 
 </robot>
-
