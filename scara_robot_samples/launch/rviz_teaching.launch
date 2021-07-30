@@ -1,19 +1,24 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="model" default="$(find scara_robot_samples)/urdf/scara_robot.urdf.xacro" />
-  <arg name="gui" default="true" />
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(arg model)'" />
-  <param name="use_gui" value="$(arg gui)"/>
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <arg name="model"	default="$(dirname)/../urdf/scara_robot.urdf.xacro" />
+  <arg name="gui"	default="true" />
 
-  <node name="rviz" pkg="rviz"
-        type="rviz"
-        args="-d $(find scara_robot_samples)/urdf.rviz" required="true" />
-  <node name="scara_controller" pkg="scara_robot_samples" type="scarasubscriber" >
+  <param name="robot_description"
+	 command="$(find xacro)/xacro.py '$(arg model)'" />
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <node name="robot_state_publisher"
+	pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <node name="scara_controller"
+	pkg="scara_robot_samples" type="scarasubscriber" >
     <param name="poweron" value="false" />
   </node>
 
   <node name="scara_teaching" pkg="scara_robot_samples" type="teaching" />
+
+  <node name="rviz" pkg="rviz" type="rviz"
+        args="-d $(dirname)/../urdf.rviz" required="true" />
 
 </launch>
 
