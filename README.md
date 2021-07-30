@@ -5,8 +5,9 @@
 詳しい導入方法・取り扱いについては下記の資料をご参照ください。
 https://www.vstone.co.jp/products/scara_robot/download/VSASR_ROS_Manual.pdf
 
+## ヴイストン株式会社提供プログラムの使用
 ### 準備
-`.bashrc`に追加
+上記資料に基づいてソフトをインストール後、以下を`.bashrc`に追加。
 
 ```
 ###                                                                             
@@ -36,16 +37,16 @@ $ roslaunch scara_robot_samples rviz_controller.launch
 ```
 ## 産総研オートメーション研究チームによる拡張
 ### テストプログラムの起動
-`MoveIt`によるシミュレーション
+`gazebo`と`MoveIt`によるシミュレーション
 ```
 $ roslaunch scara_robot_samples scara_robot_bringup.launch sim:=true
 ```
-`MoveIt`による実機制御
+ドライバと`MoveIt`による実機制御
 ```
 $ roslaunch scara_robot_samples scara_robot_bringup.launch
 ```
 ### 対話型プログラムによる操作
-最初に実機のドライバまたは`gazebo`（シミュレーション）を起動する。
+最初に実機のドライバまたは`gazebo`（シミュレーション）と`MoveIt`を起動する。
 ```
 $ roslaunch scara_robot_samples scara_robot_bringup.launch [sim:=true]
 ```
