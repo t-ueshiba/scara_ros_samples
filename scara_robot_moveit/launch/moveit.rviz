@@ -4,6 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /MotionPlanning1/Planning Request1
         - /TF1/Frames1
       Splitter Ratio: 0.7425600290298462
     Tree Height: 1013
@@ -136,9 +137,9 @@ Visualization Manager:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
         Goal State Color: 250; 128; 0
-        Interactive Marker Size: 0.4000000059604645
+        Interactive Marker Size: 0.15000000596046448
         Joint Violation Color: 255; 0; 255
-        Planning Group: scara_robot
+        Planning Group: arm
         Query Goal State: true
         Query Start State: false
         Show Workspace: false
