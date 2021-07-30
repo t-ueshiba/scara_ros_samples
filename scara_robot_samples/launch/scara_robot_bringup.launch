@@ -8,10 +8,12 @@
 					 )/launch/moveit.rviz"/>
 
   <!-- Load robot_description from URDF file to parameter server -->
+  <arg name="robot_description_file"
+       value=""/>
   <param name="robot_description"
 	 command="$(find xacro)/xacro
-		  '$(dirname)/../urdf/scara_robot.urdf.xacro'
-		  prefix:='$(arg prefix)'"/>
+		  $(dirname
+		  )/../urdf/scara_robot.urdf.xacro robot_namespace:=/"/>
 
   <!-- Bringup robots -->
   <group unless="$(arg sim)">
@@ -50,7 +52,9 @@
   </node>
 
   <!-- Launch moveit. -->
-  <include file="$(find scara_robot_moveit)/launch/move_group.launch"/>
+  <include file="$(find scara_robot_moveit)/launch/move_group.launch">
+    <arg name="load_robot_description"	value="false"/>
+  </include>
 
   <!-- Launch rviz with appropriate launch-prefix and config file. -->
   <node name="$(anon rviz)" pkg="rviz" type="rviz"

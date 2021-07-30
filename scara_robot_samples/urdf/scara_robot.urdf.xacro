@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <robot name="arm_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <xacro:arg name="robot_namespace" default="/arm_robot"/>
+
   <xacro:include filename="$(find scara_robot_samples)/urdf/common.xacro"/>
 
   <link name="world"/>
@@ -251,7 +253,8 @@
       parent_link="arm4_link" link_name="arm5l_link" lower="-0.005" upper="0.005" velocity="1"  
       origin_x="0.0" origin_y="0.0" origin_z="-0.038115" axis_x="0" axis_y="1" axis_z="0">
     </xacro:armjoint>
-    <mimic joint="arm5r_joint" multiplier="-1" offset="0" />
+    <mimic joint="arm5r_joint" multiplier="-1" offset="0"
+	   robot_namespace="$(arg robot_namespace)"/>
   </joint>
 
   <xacro:mimic_joint_plugin_gazebo name_prefix="arm5l_joint"
@@ -281,15 +284,13 @@
     <material>Gazebo/White</material>
   </gazebo>
 
-
-
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <!-- <robotNamespace>/arm_robot</robotNamespace> -->
-      <robotNamespace>/</robotNamespace>
-      <!-- <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType> -->
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
       <legacyModeNS>true</legacyModeNS>
     </plugin>
   </gazebo>
+
 </robot>
 

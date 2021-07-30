@@ -105,7 +105,7 @@
         <sensitiveness>${sensitiveness}</sensitiveness>   <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
         <maxEffort>${max_effort}</maxEffort>              <!-- only taken into account if has_pid:=true [Nm] -->
         <xacro:unless value="${robot_namespace == ''}">
-          <robotNamespace>($robot_namespace)</robotNamespace>
+          <robotNamespace>$(arg robot_namespace)</robotNamespace>
         </xacro:unless>
       </plugin>
     </gazebo>

@@ -1,15 +1,15 @@
 controller_list:
-  - name: fake_scara_robot_controller
+  - name: fake_arm_controller
     joints:
       - arm1_joint
       - arm2_joint
       - arm3_joint
       - arm4_joint
-  - name: fake_scara_gripper_controller
+  - name: fake_gripper_controller
     joints:
       - arm5r_joint
 initial:  # Define initial robot poses.
-  - group: scara_robot
+  - group: arm
     pose: home
-  - group: scara_gripper
+  - group: gripper
     pose: release
