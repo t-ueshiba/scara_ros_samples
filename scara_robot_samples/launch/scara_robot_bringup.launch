@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="sim"		default="false"/>
+  <arg name="prefix"		default=""/>
+  <arg name="rate"		default="100"/>
+  <arg name="rviz_config"	default="$(find scara_robot_moveit
+					 )/launch/moveit.rviz"/>
+
+  <!-- Load robot_description from URDF file to parameter server -->
+  <param name="robot_description"
+	 command="$(find xacro)/xacro
+		  '$(dirname)/../urdf/scara_robot.urdf.xacro'
+		  prefix:='$(arg prefix)'"/>
+
+  <!-- Bringup robots -->
+  <group unless="$(arg sim)">
+    <node name="$(arg prefix)hardware_interface"
+          pkg="scara_robot_samples" type="scara_robot_driver" output="screen">
+      <param name="prefix"	value="$(arg prefix)"/>
+      <param name="rate"	value="$(arg rate)"/>
+    </node>
+  </group>
+  
+  <group if="$(arg sim)">
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name"	value="$(dirname)/../worlds/lit.world"/>
+    </include>
+
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+	  args="-param robot_description -urdf -model arm_robot" />
+  </group>
+
+  <!-- Load parameters for all controllers from YAML file -->
+  <rosparam file="$(dirname)/../config/scara_robot_controllers.yaml"
+	    subst_value="true"/>
+
+  <!-- Spawn controllers -->
+  <node name="$(arg prefix)controller_spawner"
+        pkg="controller_manager" type="spawner" respawn="false" output="screen"
+  	args="joint_state_controller
+	      $(arg prefix)arm_controller
+	      $(arg prefix)gripper_controller"/>
+
+  <!-- Convert sensor_msgs::JointState to geometry_msgs::TransformStamped
+       using the parameter robot_description and publish to TF. -->
+  <node name="robot_state_publisher"
+	pkg ="robot_state_publisher" type="robot_state_publisher">
+    <param name="publish_frequency" value="$(arg rate)"/>
+  </node>
+
+  <!-- Launch moveit. -->
+  <include file="$(find scara_robot_moveit)/launch/move_group.launch"/>
+
+  <!-- Launch rviz with appropriate launch-prefix and config file. -->
+  <node name="$(anon rviz)" pkg="rviz" type="rviz"
+  	args="-d  $(arg rviz_config)" output="screen">
+    <rosparam file="$(find scara_robot_moveit)/config/kinematics.yaml"/>
+  </node>
+
+</launch>

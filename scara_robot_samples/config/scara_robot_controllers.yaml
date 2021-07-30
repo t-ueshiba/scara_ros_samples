@@ -1,0 +1,28 @@
+# Settings for ros_control control loop
+
+hardware_control_loop:
+  loop_hz: &loop_hz $(arg rate)
+
+joint_state_controller:
+  type:         joint_state_controller/JointStateController
+  publish_rate: *loop_hz
+
+$(arg prefix)arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - $(arg prefix)arm1_joint
+    - $(arg prefix)arm2_joint
+    - $(arg prefix)arm3_joint
+    - $(arg prefix)arm4_joint
+  gains:
+    $(arg prefix)arm1_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+    $(arg prefix)arm2_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+    $(arg prefix)arm3_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+    $(arg prefix)arm4_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+
+$(arg prefix)gripper_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - $(arg prefix)arm5r_joint
+  gains:
+    $(arg prefix)arm5r_joint: {p: 100, d: 1, i: 1, i_clamp: 1}

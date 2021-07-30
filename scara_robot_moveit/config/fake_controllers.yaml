@@ -5,3 +5,11 @@ controller_list:
       - arm2_joint
       - arm3_joint
       - arm4_joint
+  - name: fake_scara_gripper_controller
+    joints:
+      - arm5r_joint
+initial:  # Define initial robot poses.
+  - group: scara_robot
+    pose: home
+  - group: scara_gripper
+    pose: release
