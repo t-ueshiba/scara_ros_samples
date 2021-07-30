@@ -24,8 +24,9 @@ class InteractiveRoutines(ScaraRobotRoutines):
     def __init__(self):
         super(InteractiveRoutines, self).__init__()
 
-        self._robot_name  = rospy.get_param('~robot_name', 'arm')
-        self._speed       = rospy.get_param('~speed',       0.1)
+        self._robot_name   = rospy.get_param('~robot_name',   'arm')
+        self._gripper_name = rospy.get_param('~gripper_name', 'gripper')
+        self._speed        = rospy.get_param('~speed',        0.1)
 
     def move(self, xyzrpy):
         target_pose = gmsg.PoseStamped()
@@ -38,6 +39,12 @@ class InteractiveRoutines(ScaraRobotRoutines):
                                         self._robot_name, target_pose,
                                         self._speed, move_lin=True)
         return success
+
+    def grasp(self):
+        return self.go_to_named_pose(self._gripper_name, 'grasp')
+
+    def release(self):
+        return self.go_to_named_pose(self._gripper_name, 'release')
 
     def run(self):
         # Reset pose
@@ -107,9 +114,13 @@ class InteractiveRoutines(ScaraRobotRoutines):
             elif key == 'n':
                 pose_name = raw_input("  pose name? ")
                 try:
-                    self.go_to_named_pose(pose_name, self._robot_name)
+                    self.go_to_named_pose(self._robot_name, pose_name)
                 except rospy.ROSException as e:
                     rospy.logerr('Unknown pose: %s' % e)
+            elif key == 'g':
+                self.grasp()
+            elif key == 'r':
+                self.release()
 
         # Reset pose
         self.go_to_named_pose(self._robot_name, "home")

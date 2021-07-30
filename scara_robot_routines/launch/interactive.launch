@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="robot_name"	default="arm"/>
+  <arg name="gripper_name"	default="gripper"/>
+  <arg name="speed"		default="0.1"/>
+
+  <!-- Start client -->
+  <node name="interactive"
+	pkg="scara_robot_routines" type="interactive.py" output="screen">
+    <param name="robot_name"	value="$(arg robot_name)"/>
+    <param name="gripper_name"	value="$(arg gripper_name)"/>
+    <param name="speed"		value="$(arg speed)"/>
+  </node>
+
+</launch>
