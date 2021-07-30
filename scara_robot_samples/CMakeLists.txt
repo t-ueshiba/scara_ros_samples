@@ -14,6 +14,8 @@ find_package(catkin REQUIRED COMPONENTS
   scara_robot_msgs
   #sensor_msgs
   #message_generation
+  controller_manager
+  controller_interface
 )
 
 ## System dependencies are found with CMake's conventions
@@ -112,6 +114,9 @@ catkin_package(
 #  LIBRARIES scara_robot_samples
   CATKIN_DEPENDS roscpp rospy std_msgs scara_robot_msgs #message_runtime #sensor_msgs
 #  DEPENDS system_lib
+    controller_interface
+    hardware_interface
+    realtime_tools
 )
 
 ###########
@@ -236,4 +241,12 @@ add_executable(scarapublisher_gazebo
  src/scara_lib.cpp
 )
 target_link_libraries(scarapublisher_gazebo ${catkin_LIBRARIES} slabhiddevice slabhidtouart)
+
+add_executable(scara_robot_driver
+ src/scara_robot_driver.cpp
+ src/scara_lib.cpp
+)
+target_link_libraries(
+  scara_robot_driver
+  ${catkin_LIBRARIES} ${roscpp_LIBRARIES} slabhiddevice slabhidtouart)
 
