@@ -3,14 +3,16 @@
 
   <arg name="robot_name"	default="arm"/>
   <arg name="gripper_name"	default="gripper"/>
-  <arg name="speed"		default="0.1"/>
+  <arg name="speed"		default="0.5"/>
+  <arg name="moveit_eef_step"	default="0.005"/>
 
   <!-- Start client -->
   <node name="interactive"
 	pkg="scara_robot_routines" type="interactive.py" output="screen">
-    <param name="robot_name"	value="$(arg robot_name)"/>
-    <param name="gripper_name"	value="$(arg gripper_name)"/>
-    <param name="speed"		value="$(arg speed)"/>
+    <param name="robot_name"		value="$(arg robot_name)"/>
+    <param name="gripper_name"		value="$(arg gripper_name)"/>
+    <param name="speed"			value="$(arg speed)"/>
+    <param name="moveit_eef_step"	value="$(arg moveit_eef_step)"/>
   </node>
 
 </launch>
