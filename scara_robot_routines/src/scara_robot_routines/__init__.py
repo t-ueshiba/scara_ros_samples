@@ -56,7 +56,7 @@ class ScaraRobotRoutines(object):
         group.clear_pose_targets()
         return success
 
-    def go_to_frame(self, robot_name, target_frame, offset=(0, 0, 0),
+    def go_to_frame(self, robot_name, target_frame, offset=(0, 0, 0, 0, 0, 0),
                     speed=1.0, end_effector_link='',
                     high_precision=False, move_lin=True):
         target_pose = gmsg.PoseStamped()
@@ -142,14 +142,14 @@ class ScaraRobotRoutines(object):
                                        current_pose.pose, 0.01)
         return (success, is_all_close, current_pose)
 
-    def move_relative(self, robot_name, xyz=(0, 0, 0), rpy=(0, 0, 0),
+    def move_relative(self, robot_name, offset=(0, 0, 0, 0, 0, 0),
                       speed=1.0, end_effector_link='',
                       high_precision=False, move_lin=True):
         return self.go_to_pose_goal(
                    robot_name,
                    self.shift_pose(self.get_current_pose(robot_name,
                                                          end_effector_link),
-                                   xyz, rpy),
+                                   offset),
                    speed, end_effector_link, high_precision, move_lin)
 
     def stop(self, robot_name):
@@ -164,7 +164,7 @@ class ScaraRobotRoutines(object):
         return group.get_current_pose()
 
     # Utility functions
-    def shift_pose(self, pose, xyz, rpy):
+    def shift_pose(self, pose, offset):
         m44 = tfs.concatenate_matrices(self._listener.fromTranslationRotation(
                                            (pose.pose.position.x,
                                             pose.pose.position.y,
@@ -173,9 +173,9 @@ class ScaraRobotRoutines(object):
                                             pose.pose.orientation.y,
                                             pose.pose.orientation.z,
                                             pose.pose.orientation.w)),
-                                       tfs.translation_matrix(xyz),
-                                       tfs.euler_matrix(rpy[0], rpy[1], rpy[2],
-                                                        'sxyz'))
+                                       tfs.translation_matrix(offset[0:3]),
+                                       tfs.euler_matrix(offset[3], offset[4],
+                                                        offset[5], 'sxyz'))
         return gmsg.PoseStamped(
                  pose.header,
                  gmsg.Pose(

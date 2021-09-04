@@ -70,40 +70,38 @@ class InteractiveRoutines(ScaraRobotRoutines):
             elif key == 'R':
                 axis = 'Roll'
             elif key == '+':
-                xyz = [0, 0, 0]
-                rpy = [0, 0, 0]
+                offset = [0, 0, 0, 0, 0, 0]
                 if axis == 'X':
-                    xyz[0] = 0.01
+                    offset[0] = 0.01
                 elif axis == 'Y':
-                    xyz[1] = 0.01
+                    offset[1] = 0.01
                 elif axis == 'Z':
-                    xyz[2] = 0.01
+                    offset[2] = 0.01
                 else:
-                    rpy[0] = radians(10)
-                self.move_relative(self._robot_name, xyz, rpy, self._speed)
+                    offset[3] = radians(10)
+                self.move_relative(self._robot_name, offset, self._speed)
             elif key == '-':
-                xyz = [0, 0, 0]
-                rpy = [0, 0, 0]
+                offset = [0, 0, 0, 0, 0, 0]
                 if axis == 'X':
-                    xyz[0] = -0.01
+                    offset[0] = -0.01
                 elif axis == 'Y':
-                    xyz[1] = -0.01
+                    offset[1] = -0.01
                 elif axis == 'Z':
-                    xyz[2] = -0.01
+                    offset[2] = -0.01
                 else:
-                    rpy[0] = radians(-10)
-                self.move_relative(self._robot_name, xyz, rpy, self._speed)
+                    offset[3] = radians(-10)
+                self.move_relative(self._robot_name, offset, self._speed)
             elif is_num(key):
-                goal_pose = self.xyz_rpy(current_pose)
+                xyzrpy = self.xyz_rpy(current_pose)
                 if axis == 'X':
-                    goal_pose[0] = float(key)
+                    xyzrpy[0] = float(key)
                 elif axis == 'Y':
-                    goal_pose[1] = float(key)
+                    xyzrpy[1] = float(key)
                 elif axis == 'Z':
-                    goal_pose[2] = float(key)
+                    xyzrpy[2] = float(key)
                 else:
-                    goal_pose[0] = radians(float(key))
-                self.move(goal_pose)
+                    xyzrpy[3] = radians(float(key))
+                self.move(xyzrpy)
             elif key == 's':
                 self.stop(self._robot_name)
             elif key == 'f':
